@@ -27,29 +27,24 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-                    <h1>Multicore computing in R</h1>
+                    <h1>MulticoRe</h1>
 					<p>
 						&copy; 2016 Anton Lebedevich
 					</p>
                 </section>
 				<section>
-					<h2>About Me</h2>
-					<p>
-						Anton Lebedevich
-					</p>
+					<h2>Anton Lebedevich</h2>
 					<ul>
-						<li>developing scalable back-end services</li>
-						<li>debugging distributed performance problems</li>
+						<li>develop scalable back-end services</li>
+						<li>debug distributed performance problems</li>
                         <li>love time series</li>
+                        <li>blog at <a href="http://mabrek.github.io">mabrek.github.io</a>
 					</ul>
-					<p>
-						blog about monitoring and time series <a href="http://mabrek.github.io">mabrek.github.io</a>
-					</p>
 				</section>
 
                 <section>
                     <h2>Goal</h2>
-                    <p>Your laptop has > 1 cores, use them all.</p>
+                    <p>Your laptop has > 1 cores, use them.</p>
                 </section>
                 
 				<section>
@@ -58,6 +53,27 @@
 						<li>....</li>
 					</ul>
 				</section>
+
+                <section>
+                    <h2>Available tools</h2>
+                    <p><a href="https://cran.r-project.org/view=HighPerformanceComputing">cran.r-project.org/view=HighPerformanceComputing</a></p>
+                    <ul>
+                        <li><code>parallel</code> package</li>
+                        <li><code>foreach</code> package (do*) </li>
+                        <li>data.table::setDTthreads</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>TODO</h2>
+                    http://topepo.github.io/caret/parallel-processing.html
+                    http://adv-r.had.co.nz/Profiling.html#parallelise
+                    http://www.vikparuchuri.com/blog/parallel-r-loops-for-windows-and-linux/
+                    http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/
+                    beware of mkl, parallel blas implementation
+                    plyr parallel backend
+                    https://cran.r-project.org/web/packages/future/index.html
+                </section>
 
 				<section>
 					<h2>Summary</h2>
@@ -71,9 +87,8 @@
 					<p>
 					<p>Anton Lebedevich</p>
 					<p>mabrek@gmail.com</p>
-					<p><a href="https://twitter.com/widdoc">twitter.com/widdoc</a></p>
+					<p><a href="https://twitter.com/widdoc">@widdoc</a></p>
 					<p><a href="http://mabrek.github.io">mabrek.github.io</a></p>
-					<p>this presentation:</p>
 					<p><a href="http://mabrek.github.io/r-multicore-presentation-2016">mabrek.github.io/r-multicore-presentation-2016</a></p>
 				</section>
 			</div>
