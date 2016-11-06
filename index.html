@@ -36,15 +36,15 @@
 					<h2>Anton Lebedevich</h2>
 					<ul>
 						<li>develop scalable back-end services</li>
-						<li>debug distributed performance problems</li>
-                        <li>love time series</li>
+						<li>solve distributed performance issues</li>
+                        <li>love time series and anomalies</li>
                         <li>blog at <a href="http://mabrek.github.io">mabrek.github.io</a>
 					</ul>
 				</section>
 
                 <section>
-                    <h2>Goal</h2>
-                    <p>Your laptop has > 1 cores, use them.</p>
+                    <h2>Why?</h2>
+                    <p>Your laptop has &gt; 1 cores, use them all!</p>
                 </section>
                 
 				<section>
@@ -58,9 +58,15 @@
                     <h2>Available tools</h2>
                     <p><a href="https://cran.r-project.org/view=HighPerformanceComputing">cran.r-project.org/view=HighPerformanceComputing</a></p>
                     <ul>
-                        <li><code>parallel</code> package</li>
-                        <li><code>foreach</code> package (do*) </li>
-                        <li>data.table::setDTthreads</li>
+                        <li><code>parallel</code> (r-base)</li>
+                        <li><code>foreach</code> in top 100 downloaded with <code>doParallel</code></li>
+                        <li>local tricks here and there
+                            <ul>
+                                <li>xgboost nthread</li>
+                                <li>re2r parallel = T</li>
+                                <li>...</li>
+                            </ul>
+                        </li>
                     </ul>
                 </section>
 
@@ -74,6 +80,7 @@
                     plyr parallel backend
                     https://cran.r-project.org/web/packages/future/index.html
                     random numbers
+                    doRNG
                 </section>
 
 				<section>
@@ -102,7 +109,7 @@
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				controls: false,
-				progress: true,
+				progress: false,
 				history: true,
 				center: true,
 				slideNumber: 'c/t',
