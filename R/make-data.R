@@ -1,7 +1,8 @@
 source("libraries.R")
 
-rows <- 1000
-cols <- 10000
+# 360Mb, 66s cor on rugged
+rows <- 30000
+cols <- 1500
 series <- apply(matrix(rnorm(rows * cols), rows, cols), 2, cumsum)
 
 
