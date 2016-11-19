@@ -1,9 +1,7 @@
 source('libraries.R')
 
-par_cor <- function(d, split = 1) {
+par_cor_naive <- function(d) {
   n <- ncol(d)
-  g <- ceiling(n / split)
-  part <- (g * (i - 1)) : min(n, g * i)
   rl <- mclapply(combn(n, 2, simplify = FALSE), function(ij) {
     i <- ij[1]
     j <- ij[2]
