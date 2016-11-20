@@ -1,20 +1,7 @@
 source('libraries.R')
 
-par_cor_naive <- function(d) {
-  n <- ncol(d)
-  rl <- mclapply(combn(n, 2, simplify = FALSE), function(ij) {
-    i <- ij[1]
-    j <- ij[2]
-    cr <- cor(d[, i], d[, j])
-    list(i, j, cr)
-  })
-  r <- matrix(0, nrow = n, ncol = n)
-  for (ijc in rl) r[ijc[[1]], ijc[[2]]] <- ijc[[3]]
-  r + t(r) + diag(n)
-}
-
 # based on https://gist.github.com/bobthecat/5024079
-par_cor_block <- function(d, block_size = 100) {
+par_cor <- function(d, block_size = 100) {
   n <- ncol(d)
   if (n %% block_size != 0) {
     stop("Choose different 'block_size' so that ncol(x) %% block_size = 0!")
