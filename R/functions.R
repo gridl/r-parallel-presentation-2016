@@ -16,8 +16,12 @@ par_cor <- function(d, block_size = 100) {
   })
   res <- matrix(0, nrow = n, ncol = n)
   for(block in blocks) {
-    res[block[[1]], block[[2]]] <- block[[3]]
-    res[block[[2]], block[[1]]] <- t(block[[3]])
+    ca <- block[[1]]
+    cb <- block[[2]]
+    res[ca, cb] <- block[[3]]
+    if (any(ca != cb)) {
+      res[cb, ca] <- t(block[[3]])
+    }
   }
   res
 }
