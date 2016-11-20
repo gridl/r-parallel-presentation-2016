@@ -45,3 +45,9 @@ bcor[1,1]
 
 cor(series[, 1:100])[1,1] - cor(series[,1], series[,1])
 .Machine$double.eps
+
+profvis({ cor(series[, 1:100]) })
+
+profvis({ par_cor_naive(series[, 1:100]) })
+
+profvis({ par_cor_block(series[, 1:100]) })
