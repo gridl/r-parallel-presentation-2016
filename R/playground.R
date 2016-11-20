@@ -22,3 +22,6 @@ cor(series[, 1:100])[1,1] - cor(series[,1], series[,1])
 profvis({ cor(series) })
 
 profvis({ par_cor(series) })
+
+# available block sizes
+sort(sapply(unique(powerSet(as.integer(factorize(1500)))), prod))
