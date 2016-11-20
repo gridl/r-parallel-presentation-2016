@@ -25,3 +25,13 @@ profvis({ par_cor(series) })
 
 # available block sizes
 sort(sapply(unique(powerSet(as.integer(factorize(1500)))), prod))
+
+# TODO grid search to find optimal cores, block size
+
+
+options(mc.cores = 1)
+Rprof(filename = "../output/par_cor.rprof", interval = 0.001, line.profiling = T)
+cr <- par_cor(series, 1500)
+Rprof(NULL)
+
+summaryRprof(filename = "../output/par_cor.rprof", lines = "both")
