@@ -12,7 +12,9 @@ par_cor <- function(d, block_size = 100) {
   blocks <- mclapply(1:nrow(combs), function(i) {
     ca <- splits[[combs[i, 1]]]
     cb <- splits[[combs[i, 2]]]
-    list(ca, cb, cor(d[, ca], d[, cb]))
+    d_a <- d[, ca]
+    d_b <- d[, cb]
+    list(ca, cb, cor(d_a, d_b))
   })
   res <- matrix(0, nrow = n, ncol = n)
   for(block in blocks) {
