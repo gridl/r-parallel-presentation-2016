@@ -21,9 +21,7 @@ par_cor <- function(d, block_size = 100) {
     ca <- block[[1]]
     cb <- block[[2]]
     res[ca, cb] <- block[[3]]
-    if (any(ca != cb)) {
-      res[cb, ca] <- t(block[[3]])
-    }
+    res[cb, ca] <- t(block[[3]])
   }
   res
 }
