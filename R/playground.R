@@ -42,3 +42,6 @@ Rprof(NULL)
 summaryRprof(filename = "../output/par_cor.rprof", lines = "both")
 
 profvis({ par_cor(series, 1500) })
+
+registerDoParallel(4)
+system.time(for_cor(series))
