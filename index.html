@@ -72,10 +72,7 @@
 
                 <section>
                     <h2>TODO</h2>
-                    https://gist.github.com/bobthecat/5024079
-                    http://topepo.github.io/caret/parallel-processing.html
                     http://adv-r.had.co.nz/Profiling.html#parallelise
-                    http://www.vikparuchuri.com/blog/parallel-r-loops-for-windows-and-linux/
                     http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/
                     beware of mkl, parallel blas implementation
                     plyr parallel backend
@@ -85,6 +82,11 @@
                     ff, http://man7.org/linux/man-pages/man2/mmap.2.html MAP_SHARED
                     https://rpubs.com/Charly/206220
                     https://github.com/HenrikBengtsson/profmem
+                    foreach(x=iblkcol
+                    foreach .combine
+                    doMC -> doParallel
+                    https://rpubs.com/nishantsbi/223444
+                    https://www.r-bloggers.com/the-wonders-of-foreach/
                 </section>
 
 				<section>
@@ -95,17 +97,32 @@
 						<li>TODO: shared mmapped memory (ff, bigmemory)</li>
 						<li>profvis hangs</li>
 						<li>memory usage (copy, COW)</li>
+                        <li>nested parallel loops</li>
 						<li>...</li>
 					</ul>
 				</section>
 
+                <section>
+                    <h2>Further steps</h2>
+                    <ul>
+                        <li>doRedis</li>
+                    </ul>
+                </section>
+                
 				<section>
 					<h2>Summary</h2>
 					<ul>
 						<li>...</li>
 					</ul>
 				</section>
-				
+
+                <section>
+                    <h2>Links</h2>
+                    <p><a href="http://topepo.github.io/caret/parallel-processing.html">topepo.github.io/caret/parallel-processing.html</a></p>
+                    <p><a href="http://adv-r.had.co.nz/Profiling.html#parallelise">adv-r.had.co.nz/Profiling.html#parallelise</a>
+				    TODO ...
+                </section>
+                
 				<section>
 					<h2>Q&amp;A</h2>
 					<p>
