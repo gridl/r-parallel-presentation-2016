@@ -36,15 +36,23 @@ print_df <- function(x) {
   cat(sprintf("%s = %s", names(x), x), "\n", sep = ", ")
 }
 
-grid_search <- function(FN, cores, block_sizes, times = 3) {
+grid_search <- function(measure, cores, block_sizes, times = 3,
+                        setup = function(cores) {NULL},
+                        teardown = function(cluster) {NULL}) {
   mdply(
     expand.grid(cores = cores, block_size = block_sizes),
     function(cores, block_size) {
-      q <- quantile(benchmark(FN(cores, block_size), times = times)$time,
+      cl <- setup(cores)
+      q <- quantile(benchmark(measure(cores, block_size), times = times)$time,
                     c(0, 0.5, 1))
+      teardown(cl)
       r <- data.frame(cores = cores, block_size = block_size,
                       q0 = q[1], q50 = q[2], q100 = q[3])
       print_df(r)
       r
     })
+}
+
+measure_cor <- function(cores, block_size) {
+  par_cor(series, block_size)
 }
