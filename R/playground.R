@@ -34,4 +34,10 @@ measure_foreach <- function(cores, block_size) {
   par_cor(series, block_size)
 }
 
-res <- grid_search(measure_foreach, 2:detectCores(), block_sizes(ncol(series)))
+res <- grid_search(measure_foreach, 1:(detectCores() + 2),
+                   block_sizes(ncol(series), 20), 5)
+
+head(res[order(res$q50),])
+
+qplot(data = res[res$cores == 8,], x = block_size, y = q50)
+qplot(data = res[res$block_size == 140,], x = cores, y = q50)

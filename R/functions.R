@@ -33,7 +33,7 @@ block_sizes <- function(n, min_size = 50) {
 
 print_df <- function(x) {
   x <- as.list(x)
-  cat(sprintf("%s = %s", names(x), x), sep = ", ")
+  cat(sprintf("%s = %s", names(x), x), "\n", sep = ", ")
 }
 
 grid_search <- function(FN, cores, block_sizes, times = 3) {
