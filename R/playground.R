@@ -32,3 +32,5 @@ head(res[order(res$q50),])
 
 qplot(data = res[res$cores == 8,], x = block_size, y = q50)
 qplot(data = res[res$block_size == 140,], x = cores, y = q50)
+
+## R CMD BATCH --no-save --no-restore measure_mc.R
