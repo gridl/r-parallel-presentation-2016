@@ -41,9 +41,9 @@ grid_search <- function(FN, cores, block_sizes, times = 3) {
     expand.grid(cores = cores, block_size = block_sizes),
     function(cores, block_size) {
       q <- quantile(benchmark(FN(cores, block_size), times = times)$time,
-                    c(0.25, 0.5, 0.75))
+                    c(0, 0.5, 1))
       r <- data.frame(cores = cores, block_size = block_size,
-                      q25 = q[1], q50 = q[2], q75 = q[3])
+                      q0 = q[1], q50 = q[2], q100 = q[3])
       print_df(r)
       r
     })
