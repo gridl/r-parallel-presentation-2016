@@ -25,3 +25,26 @@ par_cor <- function(d, block_size = 100) {
   }
   res
 }
+
+block_sizes <- function(n, min_size = 50) {
+  bs <- sort(sapply(unique(powerSet(as.integer(factorize(n)))), prod))
+  bs[bs >= min_size & bs < n]
+}
+
+print_df <- function(x) {
+  x <- as.list(x)
+  cat(sprintf("%s = %s", names(x), x), sep = ", ")
+}
+
+grid_search <- function(FN, cores, block_sizes, times = 3) {
+  mdply(
+    expand.grid(cores = cores, block_size = block_sizes),
+    function(cores, block_size) {
+      q <- quantile(benchmark(FN(cores, block_size), times = times)$time,
+                    c(0.25, 0.5, 0.75))
+      r <- data.frame(cores = cores, block_size = block_size,
+                      q25 = q[1], q50 = q[2], q75 = q[3])
+      print_df(r)
+      r
+    })
+}

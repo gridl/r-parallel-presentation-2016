@@ -3,11 +3,14 @@ source("functions.R")
 
 object_size(series)
 
+# TODO example graph autoplot(zoo(series[,1:5]), facet=NULL)
+
 # WAT slowdown slide
 system.time(cor(series))
 
-registerDoParallel(1)
-system.time(par_cor(series))
+registerDoParallel() # remember not to set cores there to override later
+options(cores = 1)
+system.time(par_cor(series, ncol(series)))
 
 system.time(cor(series, series))
 
@@ -20,13 +23,15 @@ all.equal(cor(series), cor(series, series), tolerance = 0)
 
 profvis({ par_cor(series) })
 
-# available block sizes
-sort(sapply(unique(powerSet(as.integer(factorize(1500)))), prod))
-
 # TODO grid search to find optimal cores, block size
 
 
-profvis({ par_cor(series, 1500) })
+profvis({ par_cor(series, ncol(series)) })
 
-registerDoParallel(4)
-system.time(par_cor(series))
+
+measure_foreach <- function(cores, block_size) {
+  options(cores = cores)
+  par_cor(series, block_size)
+}
+
+res <- grid_search(measure_foreach, 2:detectCores(), block_sizes(ncol(series)))
