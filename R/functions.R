@@ -56,3 +56,13 @@ grid_search <- function(measure, cores, block_sizes, times = 3,
 measure_cor <- function(cores, block_size) {
   par_cor(series, block_size)
 }
+
+setup_psock <- function(cores) {
+  cluster <- makePSOCKcluster(cores)
+  registerDoParallel(cluster)
+  cluster
+}
+
+teardown_psock <- function(cluster) {
+  stopCluster(cluster)
+}

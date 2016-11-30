@@ -30,11 +30,6 @@ res <- readRDS("../output/measure_foreach_psock.rds")
 
 head(res[order(res$q50),])
 
-qplot(data = res[res$cores == 8,], x = block_size, y = q50)
-qplot(data = res[res$block_size == 70,], x = cores, y = q50)
-qplot(data = res[res$block_size == 100,], x = cores, y = q50)
-qplot(data = res[res$block_size == 140,], x = cores, y = q50)
-
 ##mc
 ggplot(data = res[res$cores %in% c(1, 2, 7, 8, 9),], aes(x = block_size, y = q50, color = factor(cores))) + geom_point() + geom_line() + geom_linerange(aes(ymin = q0, ymax = q100))
 
@@ -46,15 +41,21 @@ ggplot(data = res[res$block_size %in% c(70, 100, 140, 350),], aes(x = cores, y =
 
 ## R CMD BATCH --no-save --no-restore measure_mc.R
 
-
-cluster <- makePSOCKcluster(1, outfile = '/tmp/psock.txt')
+## perf measure with clock time not cpu cycles spent
+## perf record -F 999 -e cpu-clock --call-graph dwarf -p 28093 -o child-dwarf-slow.data
+cluster <- makePSOCKcluster(1)
 registerDoParallel(cluster)
 
 profvis({ par_cor(series, 20) }, 0.005)
 
 profvis({ par_cor(series, 25) }, 0.005)
 
-system.time(par_cor(series, 20, .verbose = T))
-system.time(par_cor(series, 25, .verbose = T))
+
+system.time(par_cor(series, 20))
+system.time(par_cor(series, 25))
 
 stopCluster(cluster)
+
+
+res <- readRDS("../output/measure_foreach_psock_small.rds")
+ggplot(data = res, aes(x = block_size, y = q50, color = factor(cores))) + geom_point() + geom_line() + geom_linerange(aes(ymin = q0, ymax = q100))
