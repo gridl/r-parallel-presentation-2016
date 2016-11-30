@@ -41,8 +41,6 @@ ggplot(data = res[res$block_size %in% c(70, 100, 140, 350),], aes(x = cores, y =
 
 ## R CMD BATCH --no-save --no-restore measure_mc.R
 
-## perf measure with clock time not cpu cycles spent
-## perf record -F 999 -e cpu-clock --call-graph dwarf -p 28093 -o child-dwarf-slow.data
 cluster <- makePSOCKcluster(1)
 registerDoParallel(cluster)
 
