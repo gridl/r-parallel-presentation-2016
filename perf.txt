@@ -1,0 +1,8 @@
+perf record -e sched:sched_stat_sleep -e sched:sched_switch -e sched:sched_process_exit --call-graph dwarf -m 512M -o slow.data -p
+perf inject -v -s -i slow.data -o slow.injected.data
+perf script -F comm,pid,tid,cpu,time,period,event,ip,sym,dso,trace -i slow.injected.data | awk '
+    NF > 4 { exec = $1; period_ms = int($5 / 1000000) }
+    NF > 1 && NF <= 4 && period_ms > 0 { print $2 }
+    NF < 2 && period_ms > 0 { printf "%s\n%d\n\n", exec, period_ms }' | \
+    /data/work/sources/FlameGraph/stackcollapse.pl | \
+    /data/work/sources/FlameGraph/flamegraph.pl --countname=ms --title="Off-CPU Time Flame Graph" --colors=io > offcpu.svg
