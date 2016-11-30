@@ -50,6 +50,7 @@ profvis({ par_cor(series, 20) }, 0.005)
 
 profvis({ par_cor(series, 25) }, 0.005)
 
+## .options.snow.preschedule
 
 system.time(par_cor(series, 20))
 system.time(par_cor(series, 25))

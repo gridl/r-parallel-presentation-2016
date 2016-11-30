@@ -66,3 +66,7 @@ setup_psock <- function(cores) {
 teardown_psock <- function(cluster) {
   stopCluster(cluster)
 }
+
+setup_mc <- function(cores) {
+  options(cores = cores)
+}
