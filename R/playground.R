@@ -45,3 +45,16 @@ ggplot(data = res[res$cores %in% c(1, 2, 4, 5),], aes(x = block_size, y = q50, c
 ggplot(data = res[res$block_size %in% c(70, 100, 140, 350),], aes(x = cores, y = q50, color = factor(block_size))) + geom_point() + geom_line() + geom_linerange(aes(ymin = q0, ymax = q100))
 
 ## R CMD BATCH --no-save --no-restore measure_mc.R
+
+
+cluster <- makePSOCKcluster(1, outfile = '/tmp/psock.txt')
+registerDoParallel(cluster)
+
+profvis({ par_cor(series, 20) }, 0.005)
+
+profvis({ par_cor(series, 25) }, 0.005)
+
+system.time(par_cor(series, 20, .verbose = T))
+system.time(par_cor(series, 25, .verbose = T))
+
+stopCluster(cluster)
