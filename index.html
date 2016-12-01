@@ -48,14 +48,7 @@
                 </section>
                 
                 <section>
-                    <h2>Agenda</h2>
-                    <ul>
-                        <li>....</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>What's available</h2>
+                    <h2>What's Available</h2>
                     <p><a href="https://cran.r-project.org/view=HighPerformanceComputing">cran.r-project.org/view=HighPerformanceComputing</a></p>
                     <ul>
                         <li><code>parallel</code> (r-base)</li>
@@ -105,6 +98,128 @@ foreach(i = 1:10) %dopar% {
                 </section>
 
                 <section>
+                    <h2>Example Data</h2>
+                    <pre><code class="R" data-trim>
+rows <- 30000
+cols <- 700
+series <- apply(matrix(rnorm(rows * cols), rows, cols), 2, cumsum)
+object_size(series)
+# 168 MB
+                    </code></pre>
+                    TODO image of series
+                </section>
+                
+                <section>
+                    <h2>Example Task</h2>
+                    <pre><code class="R" data-trim>
+system.time(cor(series))
+#   user  system elapsed 
+# 10.303   0.007  10.316 
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Parallel Correlation</h2>
+                    <pre><code class="R" data-trim>
+par_cor <- function(d, block_size, ...) {
+  n <- ncol(d)
+  nb <- n / block_size
+  splits <- split(1:n, rep(1:nb, each = block_size))
+  combs <- unique(t(apply(expand.grid(1:nb, 1:nb), 1, sort)))
+  blocks <- foreach(i = 1:nrow(combs), ...) %dopar% {
+    ca <- splits[[combs[i, 1]]]
+    cb <- splits[[combs[i, 2]]]
+    list(ca, cb, cor(d[, ca], d[, cb]))
+  }
+  res <- matrix(0, nrow = n, ncol = n)
+  for(block in blocks) {
+    ca <- block[[1]]
+    cb <- block[[2]]
+    res[ca, cb] <- block[[3]]
+    res[cb, ca] <- t(block[[3]])
+  }
+  res
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>WAT</h2>
+                    <pre><code class="R" data-trim>
+registerDoParallel() # remember not to set cores there to override later
+options(cores = 1)
+system.time(par_cor(series, ncol(series)))
+#   user  system elapsed 
+# 20.680   0.030  20.727 
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>WAT</h2>
+                    <pre><code class="R" data-trim>
+identical(cor(series), par_cor(series))
+#[1] FALSE
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>It's not That Bad</h2>
+                    <pre><code class="R" data-trim>
+system.time(cor(series, series))
+#   user  system elapsed 
+# 21.190   0.000  21.203 
+
+all.equal(cor(series), par_cor(series), tolerance = 0)
+#[1] "Mean relative difference: 1.956681e-16"
+
+.Machine$double.eps
+#[1] 2.220446e-16
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>do***</h2>
+                    <ul>
+                        <li>doParallel</li>
+                        <li>doMC</li>
+                        <li>doSNOW</li>
+                        <li>doFuture</li>
+                        <li>doMPI</li>
+                        <li>doRedis</li>
+                        <li>doRNG</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Test Setup</h2>
+                    <p>Intel(R) Core(TM) i7 CPU 950 @ 3.07GHz</p>
+                    <p>4 physical cores, 8 logical (HT)</p>
+                    <p>18Gb</p>
+                </section>
+
+                <section>
+                    <h2>Effect of Cores (MC)</h2>
+                    TODO image
+                </section>
+
+                <section>
+                    <h2>Effect of Block Size (MC)</h2>
+                    TODO image
+                </section>
+
+                <section>
+                    <h2>Effect of Cores (PSOCK)</h2>
+                </section>
+
+                <section>
+                    <h2>Effect of Block Size (PSOCK)</h2>
+                </section>
+
+                <section>
+                    <h2>Small Blocks (PSOCK)</h2>
+                </section>
+                
+                <section>
                     <h2>Profiling tools</h2>
                     <ul>
                         <li>profvis (GUI for Rprof)</li>
@@ -117,9 +232,18 @@ foreach(i = 1:10) %dopar% {
                 </section>
 
                 <section>
+                    <h2>Preschedule Small Blocks (PSOCK)</h2>
+                </section>
+
+                <section>
+                    <h2>And the Winner is</h2>
+                </section>
+                
+                <section>
                     <h2>TODO</h2>
                     highlight colors
                     white background in fullscreen (F)
+                    disable scroll bars in code blocks
                     
                     beware of mkl, openmp, parallel blas implementation
                     plyr parallel backend
@@ -151,6 +275,7 @@ foreach(i = 1:10) %dopar% {
                         <li>memory usage (copy, COW)</li>
                         <li>nested parallel loops</li>
                         <li>speedup is nonlinear</li>
+                        <li>small tasks</li>
                         <li>...</li>
                     </ul>
                 </section>
