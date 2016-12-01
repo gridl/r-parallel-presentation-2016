@@ -44,11 +44,16 @@ ggplot(data = res[res$block_size %in% c(70, 100, 140, 350),], aes(x = cores, y =
 cluster <- makePSOCKcluster(1)
 registerDoParallel(cluster)
 
-## .options.snow.preschedule
-
 system.time(par_cor(series, 20))
 
 system.time(par_cor(series, 25))
+
+snow_options <- list(preschedule = TRUE)
+
+system.time(par_cor(series, 20, .options.snow = snow_options))
+
+system.time(par_cor(series, 25, .options.snow = snow_options))
+
 
 stopCluster(cluster)
 
