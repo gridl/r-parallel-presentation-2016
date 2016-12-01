@@ -38,12 +38,13 @@ print_df <- function(x) {
 
 grid_search <- function(measure, cores, block_sizes, times = 3,
                         setup = function(cores) {NULL},
-                        teardown = function(cluster) {NULL}) {
+                        teardown = function(cluster) {NULL}, ...) {
   mdply(
     expand.grid(cores = cores, block_size = block_sizes),
     function(cores, block_size) {
       cl <- setup(cores)
-      q <- quantile(benchmark(measure(cores, block_size), times = times)$time,
+      q <- quantile(benchmark(measure(cores, block_size, ...),
+                              times = times)$time,
                     c(0, 0.5, 1))
       teardown(cl)
       r <- data.frame(cores = cores, block_size = block_size,
@@ -53,8 +54,8 @@ grid_search <- function(measure, cores, block_sizes, times = 3,
     })
 }
 
-measure_cor <- function(cores, block_size) {
-  par_cor(series, block_size)
+measure_cor <- function(cores, block_size, ...) {
+  par_cor(series, block_size, ...)
 }
 
 setup_psock <- function(cores) {
