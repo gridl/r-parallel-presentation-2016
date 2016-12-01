@@ -57,3 +57,14 @@ res <- readRDS("../output/measure_foreach_mc_small.rds")
 
 res <- readRDS("../output/measure_foreach_psock_small.rds")
 ggplot(data = res, aes(x = block_size, y = q50, color = factor(cores))) + geom_point() + geom_line() + geom_linerange(aes(ymin = q0, ymax = q100))
+
+
+library(snow)
+cluster <- makeCluster("localhost", type = "SOCK")
+registerDoParallel(cluster)
+
+st <- snow.time(par_cor(series, 25))
+
+st
+
+stopCluster(cluster)
