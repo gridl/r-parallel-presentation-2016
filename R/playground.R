@@ -46,11 +46,16 @@ ggplot(data = res[res$block_size %in% c(70, 100, 140, 350),], aes(x = cores, y =
 cluster <- makePSOCKcluster(1)
 registerDoParallel(cluster)
 
-## .options.snow.preschedule
-
 system.time(par_cor(series, 20))
 
 system.time(par_cor(series, 25))
+
+snow_options <- list(preschedule = TRUE)
+
+system.time(par_cor(series, 20, .options.snow = snow_options))
+
+system.time(par_cor(series, 25, .options.snow = snow_options))
+
 
 stopCluster(cluster)
 
@@ -59,3 +64,16 @@ res <- readRDS("../output/measure_foreach_mc_small.rds")
 
 res <- readRDS("../output/measure_foreach_psock_small.rds")
 ggplot(data = res, aes(x = block_size, y = q50, color = factor(cores))) + geom_point() + geom_line() + geom_linerange(aes(ymin = q0, ymax = q100))
+
+
+library(doSNOW)
+cluster <- makeCluster(1, type = "SOCK")
+registerDoSNOW(cluster)
+
+st <- snow.time(par_cor(series, 25))
+st
+
+st2 <- snow.time(par_cor(series, 20))
+st2
+
+stopCluster(cluster)

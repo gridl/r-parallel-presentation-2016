@@ -1,4 +1,9 @@
-perf record -e sched:sched_stat_sleep -e sched:sched_switch -e sched:sched_process_exit --call-graph dwarf -m 512M -o slow.data -p
+perf record -F 999 --call-graph dwarf -o slow.data -a -m 512M -- R CMD BATCH --no-save --no-restore measure_long_block.R
+
+perf record -F 999 --call-graph dwarf -o fast.data -a -m 512M -- R CMD BATCH --no-save --no-restore measure_short_block.R
+
+
+perf record -e sched:sched_stat_sleep -e sched:sched_switch -e sched:sched_process_exit --call-graph dwarf -m 512M -o slow.data -p ...
 perf inject -v -s -i slow.data -o slow.injected.data
 perf script -F comm,pid,tid,cpu,time,period,event,ip,sym,dso,trace -i slow.injected.data | awk '
     NF > 4 { exec = $1; period_ms = int($5 / 1000000) }
@@ -6,3 +11,10 @@ perf script -F comm,pid,tid,cpu,time,period,event,ip,sym,dso,trace -i slow.injec
     NF < 2 && period_ms > 0 { printf "%s\n%d\n\n", exec, period_ms }' | \
     /data/work/sources/FlameGraph/stackcollapse.pl | \
     /data/work/sources/FlameGraph/flamegraph.pl --countname=ms --title="Off-CPU Time Flame Graph" --colors=io > offcpu.svg
+
+sysdig -w slow.scap '(evt.type!=switch) and (syscall.type exists) and (proc.name=R)'
+
+sysdig -p '%evt.num %evt.time %evt.cpu %proc.name (%thread.tid) %evt.dir %evt.type %evt.info %evt.args' -r socket.scap
+
+strace -f -o strace.log -p ...
+
