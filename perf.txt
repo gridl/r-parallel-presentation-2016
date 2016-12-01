@@ -13,3 +13,8 @@ perf script -F comm,pid,tid,cpu,time,period,event,ip,sym,dso,trace -i slow.injec
     /data/work/sources/FlameGraph/flamegraph.pl --countname=ms --title="Off-CPU Time Flame Graph" --colors=io > offcpu.svg
 
 sysdig -w slow.scap '(evt.type!=switch) and (syscall.type exists) and (proc.name=R)'
+
+sysdig -p '%evt.num %evt.time %evt.cpu %proc.name (%thread.tid) %evt.dir %evt.type %evt.info %evt.args' -r socket.scap
+
+strace -f -o strace.log -p ...
+
