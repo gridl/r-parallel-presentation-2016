@@ -55,25 +55,72 @@
                 </section>
 
                 <section>
-                    <h2>Available packages</h2>
+                    <h2>What's available</h2>
                     <p><a href="https://cran.r-project.org/view=HighPerformanceComputing">cran.r-project.org/view=HighPerformanceComputing</a></p>
                     <ul>
                         <li><code>parallel</code> (r-base)</li>
-                        <li><code>foreach</code> in top 100 downloaded with <code>doParallel</code></li>
+                        <li><code>foreach</code> with <code>doParallel</code> in top 100 downloaded</li>
                         <li>local tricks here and there
                             <ul>
-                                <li>xgboost nthread</li>
-                                <li>re2r parallel = T</li>
-                                <li>...</li>
+                                <li><code>xgboost</code> <code>nthread</code></li>
+                                <li><code>data.table</code> <code>fwrite</code></li>
+                                <li><code>re2r</code> <code>parallel = TRUE</code></li>
+                                <li>&hellip;</li>
                             </ul>
                         </li>
                     </ul>
                 </section>
 
                 <section>
+                    <h2>parallel</h2>
+                    <pre><code class="R" data-trim>
+library(parallel)
+
+cores <- detectCores()
+
+# Linux
+mclapply(1:10, function(x) Sys.sleep(1), mc.cores = cores)
+# yeah, that's it
+
+# Windows
+cluster <- makePSOCKcluster(cores)
+parLapply(cluster, 1:10,  function(x) Sys.sleep(1))
+stopCluster(cluster)
+# not really, need to export data to workers too
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>foreach + doParallel</h2>
+                    <pre><code class="R" data-trim>
+library(foreach)
+library(doParallel)
+
+registerDoParallel(detectCores())
+
+foreach(i = 1:10) %dopar% {
+    Sys.sleep(1)
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Profiling tools</h2>
+                    <ul>
+                        <li>profvis (GUI for Rprof)</li>
+                        <li>perf record -F 999 --call-graph dwarf -p ...</li>
+                        <li>perf record -F 999 --call-graph dwarf -a -m 512M ...</li>
+                        <li>perf record -e sched:sched_stat_sleep -e sched:sched_switch -e sched:sched_process_exit --call-graph dwarf -m 512M -p ...</li>
+                        <li>sysdig '(evt.type!=switch) and (syscall.type exists) and (proc.name=R)'</li>
+                        <li>strace -f -p ...</li>
+                    </ul>
+                </section>
+
+                <section>
                     <h2>TODO</h2>
-                    http://adv-r.had.co.nz/Profiling.html#parallelise
-                    http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/
+                    highlight colors
+                    white background in fullscreen (F)
+                    
                     beware of mkl, openmp, parallel blas implementation
                     plyr parallel backend
                     https://cran.r-project.org/web/packages/future/index.html
@@ -91,7 +138,6 @@
                     benchr, microbenchmark
                     catch exception in forked code
                     plyr
-                    http://www.cookbook-r.com/Graphs/Plotting_means_and_error_bars_(ggplot2)/
                     http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/
                 </section>
 
@@ -126,7 +172,8 @@
                 <section>
                     <h2>Links</h2>
                     <p><a href="http://topepo.github.io/caret/parallel-processing.html">topepo.github.io/caret/parallel-processing.html</a></p>
-                    <p><a href="http://adv-r.had.co.nz/Profiling.html#parallelise">adv-r.had.co.nz/Profiling.html#parallelise</a>
+                    <p><a href="http://adv-r.had.co.nz/Profiling.html#parallelise">adv-r.had.co.nz/Profiling.html#parallelise</a></p>
+                    <p><a href="http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/">gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/</a></p>
                     TODO ...
                 </section>
                 
