@@ -208,24 +208,27 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
 
                 <section>
                     <h2>Effect of Cores (MC)</h2>
-                    TODO image
+                    <img class="stretch" src="img/mc_cores.png"/>
                 </section>
 
                 <section>
                     <h2>Effect of Block Size (MC)</h2>
-                    TODO image
+                    <img class="stretch" src="img/mc_block_size.png"/>
                 </section>
 
                 <section>
                     <h2>Effect of Cores (PSOCK)</h2>
+                    <img class="stretch" src="img/psock_cores.png"/>
                 </section>
 
                 <section>
                     <h2>Effect of Block Size (PSOCK)</h2>
+                    <img class="stretch" src="img/psock_block_size.png"/>
                 </section>
 
                 <section>
-                    <h2>Small Blocks (PSOCK)</h2>
+                    <h2>Small Blocks (PSOCK) WAT</h2>
+                    <img class="stretch" src="img/psock_small_block_size.png"/>
                 </section>
                 
                 <section>
@@ -237,11 +240,18 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
                         <li>perf record -e sched:sched_stat_sleep -e sched:sched_switch -e sched:sched_process_exit --call-graph dwarf -m 512M -p ...</li>
                         <li>sysdig '(evt.type!=switch) and (syscall.type exists) and (proc.name=R)'</li>
                         <li>strace -f -p ...</li>
+                        <li>snow.time</li>
                     </ul>
                 </section>
 
                 <section>
                     <h2>Preschedule Small Blocks (PSOCK)</h2>
+                    <img class="stretch" src="img/psock_preschedule_small_block_size.png"/>
+                </section>
+
+                <section>
+                    <h2>Preschedule Regular Blocks (PSOCK)</h2>
+                    <img class="stretch" src="img/psock_preschedule_block_size.png"/>
                 </section>
 
                 <section>
@@ -257,7 +267,6 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
                     
                     beware of mkl, openmp, parallel blas implementation
                     plyr parallel backend
-                    https://cran.r-project.org/web/packages/future/index.html
                     random numbers
                     doRNG
                     ff, http://man7.org/linux/man-pages/man2/mmap.2.html MAP_SHARED
@@ -265,13 +274,9 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
                     https://github.com/HenrikBengtsson/profmem
                     foreach(x=iblkcol
                     foreach .combine
-                    doMC -> doParallel
-                    nested loops
                     https://rpubs.com/nishantsbi/223444
                     https://www.r-bloggers.com/the-wonders-of-foreach/
-                    benchr, microbenchmark
                     catch exception in forked code
-                    plyr
                     http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/
                 </section>
 
@@ -287,13 +292,6 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
                         <li>speedup is nonlinear</li>
                         <li>small tasks</li>
                         <li>...</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>Further steps</h2>
-                    <ul>
-                        <li>doRedis</li>
                     </ul>
                 </section>
                 
