@@ -106,7 +106,7 @@ series <- apply(matrix(rnorm(rows * cols), rows, cols), 2, cumsum)
 object_size(series)
 # 168 MB
                     </code></pre>
-                    TODO image of series
+                    <img class="stretch" src="img/series.png"/>
                 </section>
                 
                 <section>
@@ -191,6 +191,15 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
                 </section>
 
                 <section>
+                    <h2>Parameters to Choose</h2>
+                    <ul>
+                        <li>MC or PSOCK</li>
+                        <li>cores</li>
+                        <li>block size</li>
+                    </ul>
+                </section>
+
+                <section>
                     <h2>Test Setup</h2>
                     <p>Intel(R) Core(TM) i7 CPU 950 @ 3.07GHz</p>
                     <p>4 physical cores, 8 logical (HT)</p>
@@ -244,6 +253,7 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
                     highlight colors
                     white background in fullscreen (F)
                     disable scroll bars in code blocks
+                    remove black border around images
                     
                     beware of mkl, openmp, parallel blas implementation
                     plyr parallel backend

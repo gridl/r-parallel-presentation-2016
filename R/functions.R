@@ -71,3 +71,8 @@ teardown_psock <- function(cluster) {
 setup_mc <- function(cores) {
   options(cores = cores)
 }
+
+
+image_device <- function(name, width=png_width, height=png_height) {
+    png(paste("../img/", name, ".png", sep=""), width, height)
+}
