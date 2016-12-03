@@ -121,6 +121,7 @@ system.time(cor(series))
                 <section>
                     <h2>Parallel Correlation</h2>
                     <pre><code class="R" data-trim>
+# based on https://gist.github.com/bobthecat/5024079
 par_cor <- function(d, block_size, ...) {
   n <- ncol(d)
   nb <- n / block_size

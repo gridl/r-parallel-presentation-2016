@@ -12,9 +12,11 @@ par_cor <- function(d, block_size = 100, ...) {
   blocks <- foreach(i = 1:nrow(combs), ...) %dopar% {
     ca <- splits[[combs[i, 1]]]
     cb <- splits[[combs[i, 2]]]
-    d_a <- d[, ca]
-    d_b <- d[, cb]
-    list(ca, cb, cor(d_a, d_b))
+    if (identical(ca, cb)) {
+      list(ca, ca, cor(d[, ca]))
+    } else {
+      list(ca, cb, cor(d[, ca], d[, cb]))
+    }
   }
   res <- matrix(0, nrow = n, ncol = n)
   for(block in blocks) {
