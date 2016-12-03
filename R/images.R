@@ -9,7 +9,7 @@ dev.off()
 mc <- readRDS("../output/measure_foreach_mc.rds")
 
 image_device("mc_cores")
-ggplot(data = mc[mc$block_size %in% c(70, 100, 140, 350),], aes(x = cores, y = q50, color = factor(block_size))) + geom_point() + geom_line() + geom_linerange(aes(ymin = q0, ymax = q100)) + scale_x_continuous(breaks = mc$cores) + labs(y = "time (s)", color = "block_size") + tm
+ggplot(data = mc[mc$block_size %in% c(100, 140, 175, 350),], aes(x = cores, y = q50, color = factor(block_size))) + geom_point() + geom_line() + geom_linerange(aes(ymin = q0, ymax = q100)) + scale_x_continuous(breaks = mc$cores) + labs(y = "time (s)", color = "block_size") + tm
 dev.off()
 
 image_device("mc_block_size")

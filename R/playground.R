@@ -25,16 +25,20 @@ all.equal(cor(series), cor(series, series), tolerance = 0)
 profvis({ par_cor(series, ncol(series)) })
 
 
-res <- readRDS("../output/measure_foreach_mc.rds")
-res <- readRDS("../output/measure_foreach_psock.rds")
+res_mc <- readRDS("../output/measure_foreach_mc.rds")
+res_psock <- readRDS("../output/measure_foreach_psock.rds")
 
-head(res[order(res$q50),])
+res_mc <- readRDS("../output/measure_foreach_mc_preschedule.rds")
+res_psock <- readRDS("../output/measure_foreach_psock_preschedule.rds")
+
+head(res_mc[order(res_mc$q50),])
+head(res_psock[order(res_psock$q50),])
 
 ##mc
-ggplot(data = res[res$cores %in% c(1, 2, 7, 8, 9),], aes(x = block_size, y = q50, color = factor(cores))) + geom_point() + geom_line() + geom_linerange(aes(ymin = q0, ymax = q100))
+ggplot(data = res_mc[res_mc$cores %in% c(1, 2, 7, 8, 9),], aes(x = block_size, y = q50, color = factor(cores))) + geom_point() + geom_line() + geom_linerange(aes(ymin = q0, ymax = q100))
 
 ##psock
-ggplot(data = res[res$cores %in% c(1, 2, 4, 5),], aes(x = block_size, y = q50, color = factor(cores))) + geom_point() + geom_line() + geom_linerange(aes(ymin = q0, ymax = q100))
+ggplot(data = res_psock[res_psock$cores %in% c(1, 2, 4, 5),], aes(x = block_size, y = q50, color = factor(cores))) + geom_point() + geom_line() + geom_linerange(aes(ymin = q0, ymax = q100))
 
 ggplot(data = res, aes(x = block_size, y = q50, color = factor(cores))) + geom_point() + geom_line() + geom_linerange(aes(ymin = q0, ymax = q100))
 

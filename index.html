@@ -79,7 +79,7 @@ mclapply(1:10, function(x) Sys.sleep(1), mc.cores = cores)
 cluster <- makePSOCKcluster(cores)
 parLapply(cluster, 1:10,  function(x) Sys.sleep(1))
 stopCluster(cluster)
-# not really, need to export data to workers too
+# incomplete example, need to export data to workers too
                     </code></pre>
                 </section>
 
@@ -95,6 +95,19 @@ foreach(i = 1:10) %dopar% {
     Sys.sleep(1)
 }
                     </code></pre>
+                </section>
+
+                <section>
+                    <h2>do***</h2>
+                    <ul>
+                        <li>doParallel</li>
+                        <li>doMC</li>
+                        <li>doSNOW</li>
+                        <li>doFuture</li>
+                        <li>doMPI</li>
+                        <li>doRedis</li>
+                        <li>doRNG</li>
+                    </ul>
                 </section>
 
                 <section>
@@ -147,7 +160,7 @@ par_cor <- function(d, block_size, ...) {
                 <section>
                     <h2>WAT</h2>
                     <pre><code class="R" data-trim>
-registerDoParallel() # remember not to set cores there to override later
+registerDoParallel()
 options(cores = 1)
 system.time(par_cor(series, ncol(series)))
 #   user  system elapsed 
@@ -176,19 +189,6 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
 .Machine$double.eps
 #[1] 2.220446e-16
                     </code></pre>
-                </section>
-
-                <section>
-                    <h2>do***</h2>
-                    <ul>
-                        <li>doParallel</li>
-                        <li>doMC</li>
-                        <li>doSNOW</li>
-                        <li>doFuture</li>
-                        <li>doMPI</li>
-                        <li>doRedis</li>
-                        <li>doRNG</li>
-                    </ul>
                 </section>
 
                 <section>
@@ -256,7 +256,7 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
                 </section>
 
                 <section>
-                    <h2>And the Winner is</h2>
+                    <h2>Final result</h2>
                 </section>
                 
                 <section>
@@ -266,18 +266,12 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
                     disable scroll bars in code blocks
                     remove black border around images
                     
-                    beware of mkl, openmp, parallel blas implementation
-                    plyr parallel backend
-                    random numbers
-                    doRNG
-                    ff, http://man7.org/linux/man-pages/man2/mmap.2.html MAP_SHARED
                     https://rpubs.com/Charly/206220
                     https://github.com/HenrikBengtsson/profmem
                     foreach(x=iblkcol
                     foreach .combine
                     https://rpubs.com/nishantsbi/223444
                     https://www.r-bloggers.com/the-wonders-of-foreach/
-                    catch exception in forked code
                     http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/
                 </section>
 
@@ -286,28 +280,34 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
                     <ul>
                         <li>splitting work makes it slower</li>
                         <li>different results from single and parallel code</li>
-                        <li>TODO: shared mmapped memory (ff, bigmemory)</li>
-                        <li>profvis hangs</li>
+                        <li>shared mmapped memory (ff, bigmemory)</li>
+                        <li>profvis hangs on MC</li>
                         <li>memory usage (copy, COW)</li>
-                        <li>nested parallel loops</li>
+                        <li>nested parallel loops (e.g. plyr)</li>
                         <li>speedup is nonlinear</li>
                         <li>small tasks</li>
-                        <li>...</li>
+                        <li>openmp, mkl, ...</li>
+                        <li>random numbers (see doRNG)</li>
+                        <li>profiling and debugging are much harder</li>
+
                     </ul>
                 </section>
                 
                 <section>
                     <h2>Summary</h2>
                     <ul>
-                        <li>...</li>
+                        <li>foreach + doParallel</li>
+                        <li>enough tasks to use cores</li>
+                        <li>HT cores are not that useful (*)</li>
+                        <li>be careful</li>
                     </ul>
                 </section>
 
                 <section>
                     <h2>Links</h2>
-                    <p><a href="http://topepo.github.io/caret/parallel-processing.html">topepo.github.io/caret/parallel-processing.html</a></p>
-                    <p><a href="http://adv-r.had.co.nz/Profiling.html#parallelise">adv-r.had.co.nz/Profiling.html#parallelise</a></p>
                     <p><a href="http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/">gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/</a></p>
+                    <p><a href="http://topepo.github.io/caret/parallel-processing.html">topepo.github.io/caret/parallel-processing.html</a></p>
+                    <p><a href="http://adv-r.had.co.nz/Profiling.html#parallelise">adv-r.had.co.nz/Profiling.html</a></p>
                     TODO ...
                 </section>
                 
