@@ -246,7 +246,7 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
                 </section>
 
                 <section>
-                    <h2>Preschedule Small Blocks (PSOCK)</h2>
+                    <h2>Preschedule (PSOCK)</h2>
                     <img class="stretch" src="img/psock_preschedule_small_block_size.png"/>
                 </section>
 
@@ -256,7 +256,34 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
                 </section>
 
                 <section>
-                    <h2>Final result</h2>
+                    <h2>Final Multicore</h2>
+                    <pre><code class="R" data-trim>
+registerDoParallel()
+options(cores = 9)
+mcoptions &lt;- list(preschedule = TRUE)
+system.time(par_cor(series, 175, .options.multicore = mcoptions))
+
+#   user  system elapsed 
+# 26.434   0.249   4.328
+
+# Recursive and acc. high-water RSS+CACHE :     893800 KiB
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Final PSOCK</h2>
+                    <pre><code class="R" data-trim>
+cluster <- makePSOCKcluster(4)
+registerDoParallel(cluster)
+snow_options <- list(preschedule = TRUE)
+system.time(par_cor(series, 140, .options.snow = snow_options))
+stopCluster(cluster)
+
+#   user  system elapsed 
+#  1.236   0.157   5.834 
+
+# Recursive and acc. high-water RSS+CACHE :    1467460 KiB
+                    </code></pre>
                 </section>
                 
                 <section>

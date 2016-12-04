@@ -81,3 +81,7 @@ st2 <- snow.time(par_cor(series, 20))
 st2
 
 stopCluster(cluster)
+
+
+## mc 175 9
+## psock 140 4

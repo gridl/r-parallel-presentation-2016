@@ -18,3 +18,4 @@ sysdig -p '%evt.num %evt.time %evt.cpu %proc.name (%thread.tid) %evt.dir %evt.ty
 
 strace -f -o strace.log -p ...
 
+cgmemtime R CMD BATCH --no-save --no-restore measure_mc_mem.R
