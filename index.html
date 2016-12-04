@@ -239,13 +239,12 @@ par_cor <- function(d, block_size, ...) {
                 <section>
                     <h2>Profiling tools</h2>
                     <ul>
-                        <li>profvis (GUI for Rprof)</li>
-                        <li>perf record -F 999 --call-graph dwarf -p ...</li>
-                        <li>perf record -F 999 --call-graph dwarf -a -m 512M ...</li>
-                        <li>perf record -e sched:sched_stat_sleep -e sched:sched_switch -e sched:sched_process_exit --call-graph dwarf -m 512M -p ...</li>
-                        <li>sysdig '(evt.type!=switch) and (syscall.type exists) and (proc.name=R)'</li>
-                        <li>strace -f -p ...</li>
-                        <li>snow.time</li>
+                        <li><code>profvis</code> (GUI for Rprof)</li>
+                        <li><code>perf record -F 999 --call-graph dwarf -p ...</code></li>
+                        <li><code>perf record -e sched:sched_stat_sleep -e sched:sched_switch -e sched:sched_process_exit --call-graph dwarf -m 512M -p ...</code></li>
+                        <li><code>sysdig '(evt.type!=switch) and (syscall.type exists) and (proc.name=R)'</code></li>
+                        <li><code>strace -f -p ...</code></li>
+                        <li><code>snow.time</code></li>
                     </ul>
                 </section>
 
@@ -302,17 +301,15 @@ Recursive and acc. high-water RSS+CACHE :    1467460 KiB
                 <section>
                     <h2>Dangers</h2>
                     <ul>
-                        <li>splitting work makes it slower</li>
-                        <li>different results from single and parallel code</li>
-                        <li>shared mmapped memory (ff, bigmemory)</li>
-                        <li>memory usage (copy, COW)</li>
-                        <li>nested parallel loops (e.g. plyr)</li>
                         <li>speedup is nonlinear</li>
                         <li>small tasks</li>
+                        <li>memory usage (copy, COW)</li>
+                        <li>different results from single and parallel code</li>
+                        <li>shared mmapped memory (ff, bigmemory)</li>
+                        <li>nested parallel loops (e.g. plyr)</li>
                         <li>openmp, mkl, ...</li>
                         <li>random numbers (see doRNG)</li>
                         <li>profiling and debugging are much harder</li>
-
                     </ul>
                 </section>
                 
@@ -332,6 +329,7 @@ Recursive and acc. high-water RSS+CACHE :    1467460 KiB
                     <p><a href="http://topepo.github.io/caret/parallel-processing.html">topepo.github.io/caret/parallel-processing.html</a></p>
                     <p><a href="http://adv-r.had.co.nz/Profiling.html#parallelise">adv-r.had.co.nz/Profiling.html</a></p>
                     <p><a href="https://github.com/gsauthof/cgmemtime">github.com/gsauthof/cgmemtime</a></p>
+                    <p><a href="http://www.brendangregg.com/perf.html">www.brendangregg.com/perf.html</a></p>
                 </section>
                 
                 <section>
