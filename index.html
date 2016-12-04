@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="css/theme/simple.css">
 
         <!-- Theme used for syntax highlighting of code -->
-        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <link rel="stylesheet" href="lib/css/github.css">
 
         <!-- Printing and PDF exports -->
         <script>
@@ -113,11 +113,11 @@ foreach(i = 1:10) %dopar% {
                 <section>
                     <h2>Example Data</h2>
                     <pre><code class="R" data-trim>
-rows <- 30000
-cols <- 700
-series <- apply(matrix(rnorm(rows * cols), rows, cols), 2, cumsum)
-object_size(series)
-# 168 MB
+> rows <- 30000
+> cols <- 700
+> series <- apply(matrix(rnorm(rows * cols), rows, cols), 2, cumsum)
+> object_size(series)
+168 MB
                     </code></pre>
                     <img class="stretch" src="img/series.png"/>
                 </section>
@@ -125,9 +125,9 @@ object_size(series)
                 <section>
                     <h2>Example Task</h2>
                     <pre><code class="R" data-trim>
-system.time(cor(series))
-#   user  system elapsed 
-# 10.303   0.007  10.316 
+> system.time(cor(series))
+   user  system elapsed 
+ 10.303   0.007  10.316 
                     </code></pre>
                 </section>
 
@@ -160,34 +160,34 @@ par_cor <- function(d, block_size, ...) {
                 <section>
                     <h2>WAT</h2>
                     <pre><code class="R" data-trim>
-registerDoParallel()
-options(cores = 1)
-system.time(par_cor(series, ncol(series)))
-#   user  system elapsed 
-# 20.680   0.030  20.727 
+> registerDoParallel()
+> options(cores = 1)
+> system.time(par_cor(series, ncol(series)))
+   user  system elapsed 
+ 20.680   0.030  20.727 
                     </code></pre>
                 </section>
 
                 <section>
                     <h2>WAT</h2>
                     <pre><code class="R" data-trim>
-identical(cor(series), par_cor(series))
-#[1] FALSE
+> identical(cor(series), par_cor(series))
+[1] FALSE
                     </code></pre>
                 </section>
 
                 <section>
                     <h2>It's not That Bad</h2>
                     <pre><code class="R" data-trim>
-system.time(cor(series, series))
-#   user  system elapsed 
-# 21.190   0.000  21.203 
+> system.time(cor(series, series))
+   user  system elapsed 
+ 21.190   0.000  21.203 
 
-all.equal(cor(series), par_cor(series), tolerance = 0)
-#[1] "Mean relative difference: 1.956681e-16"
+> all.equal(cor(series), par_cor(series), tolerance = 0)
+[1] "Mean relative difference: 1.956681e-16"
 
-.Machine$double.eps
-#[1] 2.220446e-16
+> .Machine$double.eps
+[1] 2.220446e-16
                     </code></pre>
                 </section>
 
@@ -258,48 +258,45 @@ all.equal(cor(series), par_cor(series), tolerance = 0)
                 <section>
                     <h2>Baseline</h2>
                     <pre><code class="R" data-trim>
-system.time(cor(series))
-#   user  system elapsed 
-# 10.427   0.000  10.434 
+> system.time(cor(series))
+   user  system elapsed 
+ 10.427   0.000  10.434 
 
-# Recursive and acc. high-water RSS+CACHE :     782780 KiB
+Recursive and acc. high-water RSS+CACHE :     782780 KiB
                     </code></pre>
                 </section>
                 
                 <section>
                     <h2>Final Multicore</h2>
                     <pre><code class="R" data-trim>
-registerDoParallel()
-options(cores = 9)
-mcoptions &lt;- list(preschedule = TRUE)
-system.time(par_cor(series, 175, .options.multicore = mcoptions))
+> registerDoParallel()
+> options(cores = 9)
+> mcoptions &lt;- list(preschedule = TRUE)
+> system.time(par_cor(series, 175, .options.multicore = mcoptions))
+   user  system elapsed 
+ 26.434   0.249   4.328
 
-#   user  system elapsed 
-# 26.434   0.249   4.328
-
-# Recursive and acc. high-water RSS+CACHE :     893800 KiB
+Recursive and acc. high-water RSS+CACHE :     893800 KiB
                     </code></pre>
                 </section>
 
                 <section>
                     <h2>Final PSOCK</h2>
                     <pre><code class="R" data-trim>
-cluster <- makePSOCKcluster(4)
-registerDoParallel(cluster)
-snow_options &lt;- list(preschedule = TRUE)
-system.time(par_cor(series, 140, .options.snow = snow_options))
-stopCluster(cluster)
+> cluster <- makePSOCKcluster(4)
+> registerDoParallel(cluster)
+> snow_options &lt;- list(preschedule = TRUE)
+> system.time(par_cor(series, 140, .options.snow = snow_options))
+> stopCluster(cluster)
+   user  system elapsed 
+  1.236   0.157   5.834 
 
-#   user  system elapsed 
-#  1.236   0.157   5.834 
-
-# Recursive and acc. high-water RSS+CACHE :    1467460 KiB
+Recursive and acc. high-water RSS+CACHE :    1467460 KiB
                     </code></pre>
                 </section>
                 
                 <section>
                     <h2>TODO</h2>
-                    highlight colors
                     white background in fullscreen (F)
                     disable scroll bars in code blocks
                     remove black border around images
