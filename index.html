@@ -112,13 +112,17 @@ foreach(i = 1:10) %dopar% {
 
                 <section>
                     <h2>Example Data</h2>
-                    <pre><code class="R" data-trim>
+                    <pre class="stretch"><code class="R" data-trim>
 > rows <- 30000
 > cols <- 700
 > series <- apply(matrix(rnorm(rows * cols), rows, cols), 2, cumsum)
 > object_size(series)
 168 MB
                     </code></pre>
+                </section>
+
+                <section>
+                    <h2>Example Data</h2>
                     <img class="stretch" src="img/series.png"/>
                 </section>
                 
@@ -133,7 +137,7 @@ foreach(i = 1:10) %dopar% {
 
                 <section>
                     <h2>Parallel Correlation</h2>
-                    <pre><code class="R" data-trim>
+                    <pre class="stretch"><code class="R" data-trim>
 # based on https://gist.github.com/bobthecat/5024079
 par_cor <- function(d, block_size, ...) {
   n <- ncol(d)
@@ -257,7 +261,7 @@ par_cor <- function(d, block_size, ...) {
 
                 <section>
                     <h2>Baseline</h2>
-                    <pre><code class="R" data-trim>
+                    <pre class="stretch"><code class="R" data-trim>
 > system.time(cor(series))
    user  system elapsed 
  10.427   0.000  10.434 
@@ -268,7 +272,7 @@ Recursive and acc. high-water RSS+CACHE :     782780 KiB
                 
                 <section>
                     <h2>Final Multicore</h2>
-                    <pre><code class="R" data-trim>
+                    <pre class="stretch"><code class="R" data-trim>
 > registerDoParallel()
 > options(cores = 9)
 > mcoptions &lt;- list(preschedule = TRUE)
@@ -282,7 +286,7 @@ Recursive and acc. high-water RSS+CACHE :     893800 KiB
 
                 <section>
                     <h2>Final PSOCK</h2>
-                    <pre><code class="R" data-trim>
+                    <pre class="stretch"><code class="R" data-trim>
 > cluster <- makePSOCKcluster(4)
 > registerDoParallel(cluster)
 > snow_options &lt;- list(preschedule = TRUE)
@@ -293,11 +297,6 @@ Recursive and acc. high-water RSS+CACHE :     893800 KiB
 
 Recursive and acc. high-water RSS+CACHE :    1467460 KiB
                     </code></pre>
-                </section>
-                
-                <section>
-                    <h2>TODO</h2>
-                    disable scroll bars in code blocks
                 </section>
 
                 <section>
