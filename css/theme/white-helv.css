@@ -4,11 +4,15 @@
  * By Hakim El Hattab, http://hakim.se
  */
 section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
-  color: #fff; }
+    color: #fff; }
 
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
+html { 
+  background-color: #fff !important; 
+}
+
 body {
   background: #fff;
   background-color: #fff; }
@@ -224,9 +228,7 @@ body {
  *********************************************/
 .reveal section img {
   margin: 15px 0px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 4px solid #222;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+  background: rgba(255, 255, 255, 0.12); }
 
 .reveal section img.plain {
   border: 0;
