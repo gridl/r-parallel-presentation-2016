@@ -303,14 +303,6 @@ stopCluster(cluster)
                     white background in fullscreen (F)
                     disable scroll bars in code blocks
                     remove black border around images
-                    
-                    https://rpubs.com/Charly/206220
-                    https://github.com/HenrikBengtsson/profmem
-                    foreach(x=iblkcol
-                    foreach .combine
-                    https://rpubs.com/nishantsbi/223444
-                    https://www.r-bloggers.com/the-wonders-of-foreach/
-                    http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/
                 </section>
 
                 <section>
@@ -319,7 +311,6 @@ stopCluster(cluster)
                         <li>splitting work makes it slower</li>
                         <li>different results from single and parallel code</li>
                         <li>shared mmapped memory (ff, bigmemory)</li>
-                        <li>profvis hangs on MC</li>
                         <li>memory usage (copy, COW)</li>
                         <li>nested parallel loops (e.g. plyr)</li>
                         <li>speedup is nonlinear</li>
@@ -335,7 +326,7 @@ stopCluster(cluster)
                     <h2>Summary</h2>
                     <ul>
                         <li>foreach + doParallel</li>
-                        <li>enough tasks to use cores</li>
+                        <li>enough tasks to evenly fill all cores</li>
                         <li>HT cores are not that useful (*)</li>
                         <li>be careful</li>
                     </ul>
@@ -346,7 +337,7 @@ stopCluster(cluster)
                     <p><a href="http://gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/">gforge.se/2015/02/how-to-go-parallel-in-r-basics-tips/</a></p>
                     <p><a href="http://topepo.github.io/caret/parallel-processing.html">topepo.github.io/caret/parallel-processing.html</a></p>
                     <p><a href="http://adv-r.had.co.nz/Profiling.html#parallelise">adv-r.had.co.nz/Profiling.html</a></p>
-                    TODO ...
+                    <p><a href="https://github.com/gsauthof/cgmemtime">github.com/gsauthof/cgmemtime</a></p>
                 </section>
                 
                 <section>
