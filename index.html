@@ -160,19 +160,19 @@ par_cor <- function(d, block_size, ...) {
                 <section>
                     <h2>WAT</h2>
                     <pre><code class="R" data-trim>
-> registerDoParallel()
-> options(cores = 1)
-> system.time(par_cor(series, ncol(series)))
-   user  system elapsed 
- 20.680   0.030  20.727 
+> identical(cor(series), par_cor(series))
+[1] FALSE
                     </code></pre>
                 </section>
 
                 <section>
                     <h2>WAT</h2>
                     <pre><code class="R" data-trim>
-> identical(cor(series), par_cor(series))
-[1] FALSE
+> registerDoParallel()
+> options(cores = 1)
+> system.time(par_cor(series, ncol(series)))
+   user  system elapsed 
+ 20.680   0.030  20.727 
                     </code></pre>
                 </section>
 
