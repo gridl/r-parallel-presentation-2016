@@ -244,6 +244,7 @@ par_cor <- function(d, block_size, ...) {
                         <li><code>perf record -e sched:sched_stat_sleep -e sched:sched_switch -e sched:sched_process_exit --call-graph dwarf -m 512M -p ...</code></li>
                         <li><code>sysdig '(evt.type!=switch) and (syscall.type exists) and (proc.name=R)'</code></li>
                         <li><code>strace -f -p ...</code></li>
+                        <li>read the source, Luke &hellip;</li>
                         <li><code>snow.time</code></li>
                     </ul>
                 </section>
