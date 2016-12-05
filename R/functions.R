@@ -75,6 +75,6 @@ setup_mc <- function(cores) {
 }
 
 
-image_device <- function(name, width=png_width, height=png_height) {
-    png(paste("../img/", name, ".png", sep=""), width, height)
+image_device <- function(name, width=image_width, height=image_height) {
+    svg(paste("../img/", name, ".svg", sep=""), width, height, 40)
 }
