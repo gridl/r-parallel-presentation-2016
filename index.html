@@ -240,7 +240,7 @@ par_cor <- function(d, block_size, ...) {
                     <h2>Profiling tools</h2>
                     <ul>
                         <li><code>profvis</code> (GUI for Rprof)</li>
-                        <li><code>perf record -F 999 --call-graph dwarf -p ...</code></li>
+                        <li><code>perf record --call-graph dwarf -p ...</code></li>
                         <li><code>perf record -e sched:sched_stat_sleep -e sched:sched_switch -e sched:sched_process_exit --call-graph dwarf -m 512M -p ...</code></li>
                         <li><code>sysdig '(evt.type!=switch) and (syscall.type exists) and (proc.name=R)'</code></li>
                         <li><code>strace -f -p ...</code></li>
