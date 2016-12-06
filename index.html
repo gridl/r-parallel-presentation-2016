@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="css/theme/white-helv.css">
 
         <!-- Theme used for syntax highlighting of code -->
-        <link rel="stylesheet" href="lib/css/github.css">
+        <link rel="stylesheet" href="lib/css/github-gist.css">
 
         <!-- Printing and PDF exports -->
         <script>
@@ -112,10 +112,11 @@ foreach(i = 1:10) %dopar% {
 
                 <section>
                     <h2>Example Data</h2>
-                    <pre class="stretch"><code class="R" data-trim>
+                    <pre><code class="R" data-trim>
 > rows <- 30000
 > cols <- 700
-> series <- apply(matrix(rnorm(rows * cols), rows, cols), 2, cumsum)
+> series <- apply(matrix(rnorm(rows * cols), rows, cols),
++                 2, cumsum)
 > object_size(series)
 168 MB
                     </code></pre>
@@ -264,7 +265,7 @@ par_cor <- function(d, block_size, ...) {
 
                 <section>
                     <h2>Baseline</h2>
-                    <pre class="stretch"><code class="R" data-trim>
+                    <pre><code class="R" data-trim>
 > system.time(cor(series))
    user  system elapsed 
  10.427   0.000  10.434 
@@ -275,11 +276,12 @@ Recursive and acc. high-water RSS+CACHE :     782780 KiB
                 
                 <section>
                     <h2>Final Multicore</h2>
-                    <pre class="stretch"><code class="R" data-trim>
+                    <pre><code class="R" data-trim>
 > registerDoParallel()
 > options(cores = 9)
 > mcoptions &lt;- list(preschedule = TRUE)
-> system.time(par_cor(series, 175, .options.multicore = mcoptions))
+> system.time(par_cor(series, 175,
++                     .options.multicore = mcoptions))
    user  system elapsed 
  26.434   0.249   4.328
 
@@ -289,11 +291,12 @@ Recursive and acc. high-water RSS+CACHE :     893800 KiB
 
                 <section>
                     <h2>Final PSOCK</h2>
-                    <pre class="stretch"><code class="R" data-trim>
+                    <pre><code class="R" data-trim>
 > cluster <- makePSOCKcluster(4)
 > registerDoParallel(cluster)
 > snow_options &lt;- list(preschedule = TRUE)
-> system.time(par_cor(series, 140, .options.snow = snow_options))
+> system.time(par_cor(series, 140,
++                     .options.snow = snow_options))
 > stopCluster(cluster)
    user  system elapsed 
   1.236   0.157   5.834 
