@@ -1,5 +1,5 @@
-image_width <- 8
-image_height <- 5
+image_width <- 6
+image_height <- 4
 
 font_size <- 16
 
