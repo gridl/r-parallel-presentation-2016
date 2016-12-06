@@ -1,7 +1,7 @@
-image_width <- 16
-image_height <- 10
+image_width <- 8
+image_height <- 5
 
-font_size <- 40
+font_size <- 16
 
 tm <- theme_bw(base_size = font_size) +
   theme(panel.border = element_blank(), 
